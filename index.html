@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Krypton Ops. Onde o ataque morre. Auditoria de código, hardening e backups isolados para proteger o seu negócio.">
+<meta property="og:title" content="Krypton Ops | Onde o ataque morre.">
+<meta property="og:description" content="Cibersegurança de elite: auditoria, hardening e backup isolado.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#060913">
+<title>Krypton Ops | Onde o ataque morre.</title>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.1.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style type="text/tailwindcss">
+  @layer components {
+    .inp { @apply w-full rounded-lg border border-slate-700 bg-slate-950/70 px-3 py-2.5 text-sm text-white placeholder-slate-500 outline-none focus:border-violet-400 focus:ring-2 focus:ring-violet-400/20; }
+    .btn { @apply inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-fuchsia-500 via-violet-500 to-cyan-400 px-5 py-2.5 text-sm font-bold text-slate-950 transition hover:brightness-110 active:scale-95 cursor-pointer; }
+    .btn2 { @apply inline-flex items-center justify-center rounded-lg border border-slate-600 px-4 py-2 text-sm font-semibold text-slate-200 transition hover:border-violet-400 hover:text-violet-300 cursor-pointer; }
+    .card { @apply rounded-2xl border border-slate-800 bg-slate-900/60 p-5 backdrop-blur; }
+    .lbl { @apply mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-400; }
+    .tab { @apply rounded-lg px-4 py-2 text-sm font-semibold text-slate-400 transition hover:text-white cursor-pointer; }
+    .tab.on { @apply bg-violet-400/15 text-violet-300; }
+  }
+  body { background: radial-gradient(900px 500px at 80% -10%, rgba(139,92,246,.18), transparent), radial-gradient(700px 400px at -10% 30%, rgba(34,211,238,.12), transparent), #060913; }
+  .glow { text-shadow: 0 0 24px rgba(139,92,246,.5); }
+  .grid-bg { background-image: linear-gradient(rgba(148,163,184,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(148,163,184,.06) 1px, transparent 1px); background-size: 40px 40px; }
+  .grad { background: linear-gradient(90deg,#e879f9,#a78bfa,#22d3ee); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  @keyframes float { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(18px) rotate(6deg); } }
+  .float { animation: float 9s ease-in-out infinite; }
+  .hp { position: absolute; left: -9999px; }
+  [data-tabc] { display: none; }
+  [data-tabc].show { display: block; }
+  @media (min-width: 1024px) { [data-tabc="prod"].show, [data-tabc="cli"].show { display: grid; } }
+</style>
+</head>
+<body class="min-h-screen font-sans text-slate-300 antialiased">
+
+<header class="sticky top-0 z-40 border-b border-slate-800/80 bg-[#060913]/85 backdrop-blur">
+  <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
+    <a href="#/" class="flex items-center gap-2.5" aria-label="Krypton Ops, página inicial"><img src="logo.svg" alt="" width="36" height="36"><span class="font-mono text-lg font-bold tracking-widest text-white">KRYPTON<span class="text-fuchsia-400">_OPS</span></span></a>
+    <nav class="flex items-center gap-5 text-sm font-semibold">
+      <a href="#/" data-nav="home" class="hover:text-violet-300">Início</a>
+      <a href="#/produtos" data-nav="produtos" class="hover:text-violet-300">Produtos</a>
+      <a id="wa-top" target="_blank" rel="noopener noreferrer" class="btn !py-2">WhatsApp</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- PÁGINA: INÍCIO -->
+<div data-page="home">
+  <section class="grid-bg relative overflow-hidden">
+    <img src="logo.svg" alt="" class="float pointer-events-none absolute -right-16 -top-16 h-96 w-96 opacity-20">
+    <div class="mx-auto grid max-w-6xl items-center gap-10 px-5 py-20 md:grid-cols-2 md:py-28">
+      <div>
+        <span class="inline-block rounded-full border border-violet-400/30 bg-violet-400/10 px-3 py-1 font-mono text-xs text-violet-300">● Proteção ativa 24 horas</span>
+        <h1 class="mt-5 text-5xl font-extrabold leading-[1.05] text-white md:text-7xl">Onde o ataque <span class="grad glow">morre.</span></h1>
+        <p class="mt-5 max-w-xl text-lg text-slate-400">Defesa digital contra exploits e vazamentos: auditoria de código, hardening de servidores e backups criptografados. Protegemos o seu negócio antes que o ataque aconteça.</p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="#contato" class="btn">Solicitar diagnóstico</a>
+          <a href="#/produtos" class="btn2">Ver produtos</a>
+        </div>
+      </div>
+      <div class="card font-mono text-xs leading-relaxed shadow-2xl shadow-violet-500/10">
+        <div class="mb-3 flex gap-1.5"><i class="h-3 w-3 rounded-full bg-red-400"></i><i class="h-3 w-3 rounded-full bg-amber-400"></i><i class="h-3 w-3 rounded-full bg-violet-400"></i></div>
+        <p class="text-violet-400">$ krypton scan --target seu-site.com.br</p>
+        <p>▸ Verificando cabeçalhos HTTP... <span class="text-emerald-400">OK</span></p>
+        <p>▸ Analisando dependências... <span class="text-amber-300">2 alertas</span></p>
+        <p>▸ Testando regras do banco... <span class="text-emerald-400">OK</span></p>
+        <p>▸ Validando backups... <span class="text-emerald-400">OK</span></p>
+        <p class="mt-2 text-white">Relatório pronto. Correções priorizadas.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-6xl px-5 py-16">
+    <h2 class="text-3xl font-bold text-white">O que fazemos</h2>
+    <div class="mt-8 grid gap-5 md:grid-cols-3">
+      <div class="card"><div class="text-3xl">🛡️</div><h3 class="mt-3 font-bold text-white">Auditoria e pentest</h3><p class="mt-2 text-sm text-slate-400">Revisão do código-fonte e testes de invasão controlados, com relatório claro e plano de correção.</p></div>
+      <div class="card"><div class="text-3xl">🔒</div><h3 class="mt-3 font-bold text-white">Hardening e WAF</h3><p class="mt-2 text-sm text-slate-400">Configuração segura de servidores, cabeçalhos e firewall de aplicação contra os ataques mais comuns.</p></div>
+      <div class="card"><div class="text-3xl">☁️</div><h3 class="mt-3 font-bold text-white">Backup isolado</h3><p class="mt-2 text-sm text-slate-400">Cópias criptografadas e fora do ambiente principal, prontas para restaurar em caso de incidente.</p></div>
+    </div>
+  </section>
+
+  <section id="contato" class="mx-auto max-w-3xl px-5 pb-24">
+    <div class="card">
+      <h2 class="text-2xl font-bold text-white">Fale com a gente</h2>
+      <p class="mt-1 text-sm text-slate-400">Preencha o formulário e responderemos o mais rápido possível.</p>
+      <form id="lead-form" class="mt-5 grid gap-4 md:grid-cols-2" autocomplete="off">
+        <div><label class="lbl" for="l-name">Nome ou empresa</label><input id="l-name" class="inp" required maxlength="80" placeholder="Ex.: Maria Silva"></div>
+        <div><label class="lbl" for="l-phone">WhatsApp</label><input id="l-phone" class="inp" required maxlength="20" inputmode="tel" placeholder="(34) 99999-9999"></div>
+        <div><label class="lbl" for="l-email">E-mail</label><input id="l-email" type="email" class="inp" required maxlength="100" placeholder="voce@empresa.com"></div>
+        <div><label class="lbl" for="l-svc">Serviço de interesse</label>
+          <select id="l-svc" class="inp"><option>Auditoria de código e pentest</option><option>Hardening e firewall WAF</option><option>Backup isolado remoto</option></select></div>
+        <input id="l-site" class="hp" tabindex="-1" aria-hidden="true">
+        <div class="md:col-span-2"><button class="btn w-full" type="submit">Enviar solicitação</button>
+          <p id="l-msg" class="mt-3 hidden text-center text-sm"></p></div>
+      </form>
+    </div>
+  </section>
+</div>
+
+<!-- PÁGINA: PRODUTOS -->
+<div data-page="produtos" class="hidden">
+  <section class="mx-auto max-w-6xl px-5 py-16">
+    <h1 class="text-4xl font-extrabold text-white">Nossos <span class="text-violet-400 glow">produtos</span></h1>
+    <p class="mt-2 text-slate-400">Escolha uma solução e peça um orçamento direto pelo WhatsApp.</p>
+    <div id="shop" class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"></div>
+  </section>
+</div>
+
+<!-- PÁGINA: LOGIN ADMIN (rota secreta) -->
+<div data-page="login" class="hidden">
+  <section class="mx-auto flex max-w-sm px-5 py-24">
+    <form id="login-form" class="card w-full space-y-4">
+      <div class="text-center"><span class="rounded border border-red-400/30 bg-red-400/10 px-2 py-0.5 font-mono text-[10px] text-red-300">ÁREA RESTRITA</span>
+      <h1 class="mt-3 text-xl font-bold text-white">Painel administrativo</h1></div>
+      <div><label class="lbl" for="a-mail">E-mail</label><input id="a-mail" type="email" class="inp" required autocomplete="username"></div>
+      <div><label class="lbl" for="a-pass">Senha</label><input id="a-pass" type="password" class="inp" required autocomplete="current-password"></div>
+      <button class="btn w-full" type="submit">Entrar</button>
+      <p id="a-err" class="hidden text-center text-sm text-red-400"></p>
+    </form>
+  </section>
+</div>
+
+<!-- PÁGINA: PAINEL ADMIN -->
+<div data-page="admin" class="hidden">
+  <section class="mx-auto max-w-6xl px-5 py-8">
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <div><h1 class="text-2xl font-bold text-white">Painel de controle</h1><p class="text-xs text-violet-400">● Dados em tempo real</p></div>
+      <div class="flex flex-wrap gap-1 rounded-xl border border-slate-800 bg-slate-900/60 p-1">
+        <button class="tab on" data-tab="dash">Financeiro</button>
+        <button class="tab" data-tab="prod">Produtos</button>
+        <button class="tab" data-tab="cli">Clientes</button>
+      </div>
+      <button id="logout" class="btn2">Sair</button>
+    </div>
+
+    <!-- Financeiro -->
+    <div data-tabc="dash" class="show mt-6 space-y-5">
+      <div class="grid grid-cols-2 gap-4 lg:grid-cols-4">
+        <div class="card"><p class="lbl">Receita bruta</p><p id="k-bruto" class="text-xl font-bold text-emerald-400">R$ 0,00</p></div>
+        <div class="card"><p class="lbl">Dívidas</p><p id="k-div" class="text-xl font-bold text-red-400">R$ 0,00</p></div>
+        <div class="card"><p class="lbl">Saldo líquido</p><p id="k-liq" class="text-xl font-bold text-white">R$ 0,00</p></div>
+        <div class="card"><p class="lbl">Melhor investimento</p><p id="k-best" class="text-xl font-bold text-cyan-300">—</p></div>
+      </div>
+      <div class="grid gap-5 lg:grid-cols-3">
+        <div class="card"><p class="lbl">Visão geral (R$)</p><div class="h-56"><canvas id="c1"></canvas></div></div>
+        <div class="card"><p class="lbl">Investido por categoria</p><div class="h-56"><canvas id="c2"></canvas></div></div>
+        <div class="card"><p class="lbl">Retorno médio por categoria (%)</p><div class="h-56"><canvas id="c3"></canvas></div></div>
+      </div>
+      <div class="grid gap-5 lg:grid-cols-3">
+        <form id="f-fin" class="card space-y-3">
+          <p class="font-bold text-white">Novo lançamento</p>
+          <div><label class="lbl" for="f-tipo">Tipo</label><select id="f-tipo" class="inp"><option>Receita</option><option>Despesa</option><option>Dívida</option><option>Investimento</option></select></div>
+          <div><label class="lbl" for="f-cat">Categoria</label><input id="f-cat" class="inp" required maxlength="40" placeholder="Ex.: Tesouro Direto"></div>
+          <div><label class="lbl" for="f-val">Valor (R$)</label><input id="f-val" class="inp" required inputmode="decimal" placeholder="1500,00"></div>
+          <div><label class="lbl" for="f-ret">Retorno % (só investimento)</label><input id="f-ret" class="inp" inputmode="decimal" placeholder="12,5"></div>
+          <button class="btn w-full" type="submit">Adicionar</button>
+        </form>
+        <div class="card lg:col-span-2"><p class="mb-3 font-bold text-white">Últimos lançamentos</p><div id="t-fin" class="space-y-2"></div></div>
+      </div>
+    </div>
+
+    <!-- Produtos -->
+    <div data-tabc="prod" class="mt-6 gap-5 lg:grid-cols-3">
+      <form id="f-prod" class="card space-y-3 self-start">
+        <p class="font-bold text-white">Criar produto</p>
+        <div><label class="lbl" for="p-name">Nome</label><input id="p-name" class="inp" required maxlength="60"></div>
+        <div><label class="lbl" for="p-price">Preço (R$)</label><input id="p-price" class="inp" required inputmode="decimal" placeholder="990,00"></div>
+        <div><label class="lbl" for="p-desc">Descrição</label><textarea id="p-desc" class="inp" rows="3" maxlength="240"></textarea></div>
+        <button class="btn w-full" type="submit">Publicar produto</button>
+      </form>
+      <div class="card mt-5 lg:col-span-2 lg:mt-0"><p class="mb-3 font-bold text-white">Produtos publicados</p><div id="t-prod" class="space-y-2"></div></div>
+    </div>
+
+    <!-- Clientes -->
+    <div data-tabc="cli" class="mt-6 gap-5 lg:grid-cols-3">
+      <form id="f-cli" class="card space-y-3 self-start">
+        <p class="font-bold text-white">Novo cliente</p>
+        <div><label class="lbl" for="c-name">Nome</label><input id="c-name" class="inp" required maxlength="80"></div>
+        <div><label class="lbl" for="c-phone">Telefone</label><input id="c-phone" class="inp" maxlength="20"></div>
+        <div><label class="lbl" for="c-mail">E-mail</label><input id="c-mail" type="email" class="inp" maxlength="100"></div>
+        <div><label class="lbl" for="c-note">Observações</label><textarea id="c-note" class="inp" rows="3" maxlength="300"></textarea></div>
+        <button class="btn w-full" type="submit">Salvar cliente</button>
+      </form>
+      <div class="card mt-5 lg:col-span-2 lg:mt-0">
+        <div class="mb-3 flex items-center justify-between gap-3"><p class="font-bold text-white">Banco de clientes <span id="c-count" class="text-slate-500"></span></p>
+        <input id="c-search" class="inp !w-48" placeholder="Buscar..." aria-label="Buscar cliente"></div>
+        <div id="t-cli" class="space-y-2"></div>
+      </div>
+    </div>
+  </section>
+</div>
+</main>
+
+<footer class="border-t border-slate-800 py-6 text-center text-xs text-slate-500">© 2026 Krypton Ops · Onde o ataque morre. Todos os direitos reservados.</footer>
+
+<a id="wa-fab" target="_blank" rel="noopener noreferrer" aria-label="Falar com o João no WhatsApp" class="fixed bottom-5 right-5 z-50 flex items-center gap-2 rounded-full bg-[#25D366] px-5 py-3 text-sm font-bold text-slate-950 shadow-lg shadow-violet-500/30 transition hover:scale-105">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 2a8 8 0 1 1-4.2 14.8l-.4-.2-2.6.7.7-2.5-.3-.4A8 8 0 0 1 12 4Zm-3 3.500c-.3 0-.7.2-.9.6-.3.500-.6 1.300-.2 2.300.7 1.900 2.100 3.500 4 4.400 1.200.5 2 .6 2.700.4.600-.2 1.200-.8 1.300-1.300.1-.3 0-.5-.2-.6l-1.500-.7c-.2-.1-.4 0-.6.200l-.5.600c-.1.100-.3.200-.5.100-1.200-.5-2.200-1.400-2.800-2.500-.1-.2 0-.4.100-.5l.4-.5c.1-.2.1-.4 0-.6l-.6-1.500c-.1-.3-.3-.4-.5-.4H9Z"/></svg>
+  WhatsApp
+</a>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
