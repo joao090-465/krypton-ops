@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krypton Ops // Cyber Security</title>
+    <!-- Tailwind CSS Oficial via HTTPS -->
+    <link href="https://jsdelivr.net" rel="stylesheet">
+    <style>
+        /* Desativa rolagem global: efeito de monitor/painel fixo */
+        body, html {
+            overflow: hidden;
+            height: 100vh;
+            background-color: #060913;
+        }
+        .screen { display: none; }
+        .screen.active { display: flex; }
+        
+        /* Custom Scrollbar para tabelas internas */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #10b981; rounded: 2px; }
+        
+        /* Efeito de brilho de terminal */
+        .neon-glow {
+            text-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+        }
+        .neon-border {
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.1);
+        }
+    </style>
+</head>
+<body class="text-gray-300 font-mono flex flex-col h-screen antialiased">
+
+    <!-- TOPBAR FIXA (STAY AT 16px HIGH) -->
+    <nav class="border-b border-emerald-500/20 bg-[#090d1a] px-6 py-4 flex justify-between items-center h-16 shrink-0 relative z-50">
+        <div class="text-sm font-bold tracking-widest text-emerald-400 neon-glow cursor-pointer" id="nav-logo">
+            ROOT@KRYPTON_OPS:~$ <span class="text-white animate-pulse">_</span>
+        </div>
+        <div class="flex items-center gap-6 text-xs">
+            <button id="btn-nav-home" class="hover:text-emerald-400 border-b border-transparent hover:border-emerald-400 transition py-1">/HOME</button>
+            <button id="btn-nav-login" class="bg-emerald-950/40 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-900/60 px-3 py-1.5 rounded transition">
+                [ AUTH_LOGIN ]
+            </button>
+            <button id="btn-nav-logout" class="hidden bg-red-950/40 text-red-400 border border-red-500/30 hover:bg-red-900/60 px-3 py-1.5 rounded transition">
+                [ DISCONNECT ]
+            </button>
+        </div>
+    </nav>
+
+    <!-- CONTAINER DE CONTEÚDO PRINCIPAL (DASHBOARD FRAME) -->
+    <main class="flex-1 relative bg-[#060913] p-4 flex overflow-hidden">
+
+        <!-- JANELA 1: INTERFACE DE SERVIÇOS & ENTRADA DE LEADS (MÓDULO HOME) -->
+        <section id="screen-home" class="screen active absolute inset-4 flex flex-col md:flex-row gap-4">
+            
+            <!-- Terminal de Apresentação (Esquerda) -->
+            <div class="flex-1 bg-[#090d1a] border border-emerald-500/10 rounded p-6 flex flex-col justify-between neon-border">
+                <div>
+                    <div class="text-emerald-500/50 text-[10px] uppercase mb-4">// DISPOSITIVOS DE SEGURANÇA OPERACIONAIS</div>
+                    <h1 class="text-2xl md:text-4xl font-extrabold text-white tracking-tight mb-4">
+                        Sistemas de Defesa Contra <br>
+                        <span class="text-emerald-400 neon-glow">Exploits e Vazamentos</span>
+                    </h1>
+                    <p class="text-gray-400 text-xs md:text-sm leading-relaxed max-w-lg mb-6">
+                        Análise de ameaças estruturais, implantação de firewalls robustos e auditoria estática de código-fonte para mitigar incidentes cibernéticos.
+                    </p>
+                    
+                    <!-- Lista de Modulos de Defesa -->
+                    <div class="space-y-2 text-xs">
+                        <div class="flex items-center gap-2 text-emerald-400"><span class="text-[9px]">●</span> [01] CONFIGURAÇÃO ESTREITA DE CABEÇALHOS HTTP</div>
+                        <div class="flex items-center gap-2 text-emerald-400"><span class="text-[9px]">●</span> [02] TRANCAMENTO DE AMBIENTE CLOUD FIRESTORE</div>
+                        <div class="flex items-center gap-2 text-emerald-400"><span class="text-[9px]">●</span> [03] BACKUPS CRIPTOGRAFADOS DE RECUPERAÇÃO</div>
+                    </div>
+                </div>
+                <div class="text-[10px] text-gray-600 font-mono mt-4">
+                    KRYPTON_SEC v1.0.0 // PROTOCOLO ATIVO COM SUCESSO
+                </div>
+            </div>
+
+            <!-- Terminal de Captura (Direita) -->
+            <div class="w-full md:w-96 bg-[#090d1a] border border-emerald-500/10 rounded p-6 flex flex-col justify-center neon-border">
+                <form id="lead-form" class="space-y-4">
+                    <div class="text-xs text-emerald-400 font-bold border-b border-emerald-500/20 pb-2 mb-2 font-mono">
+                        # INICIALIZAR_RECON_SOLICITAÇÃO
+                    </div>
+                    <div>
+                        <label class="block text-[10px] text-gray-500 uppercase mb-1">Identificador / Empresa</label>
+                        <input type="text" id="lead-name" required placeholder="ex: Corporação X" class="w-full bg-[#060913] border border-gray-800 focus:border-emerald-500/50 rounded px-3 py-2 text-xs text-white focus:outline-none font-mono">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] text-gray-500 uppercase mb-1">Destino de Resposta (Email)</label>
+                        <input type="email" id="lead-email" required placeholder="ex: admin@corp.io" class="w-full bg-[#060913] border border-gray-800 focus:border-emerald-500/50 rounded px-3 py-2 text-xs text-white focus:outline-none font-mono">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] text-gray-500 uppercase mb-1">Vetor de Serviço</label>
+                        <select id="lead-service" class="w-full bg-[#060913] border border-gray-800 focus:border-emerald-500/50 rounded px-3 py-1.5 text-xs text-white focus:outline-none font-mono">
+                            <option value="Auditoria de Código / Pentest">Auditoria de Código / Pentest</option>
+                            <option value="Hardening & Firewall WAF">Hardening & Firewall WAF</option>
+                            <option value="Backup Isolado Remoto">Backup Isolado Remoto</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="w-full bg-emerald-500 text-black hover:bg-emerald-400 font-bold py-2.5 rounded text-xs transition uppercase font-mono tracking-wider">
+                        Disparar Carga de Dados
+                    </button>
+                    <p id="lead-success" class="text-xs text-emerald-400 text-center font-mono hidden mt-2">✓ PAYLOAD_GRAVADO_NO_FIRESTORE</p>
+                </form>
+            </div>
+        </section>
+
+        <!-- JANELA 2: FORMULÁRIO DE LOGIN DO ADMINISTRADOR (MÓDULO AUTH) -->
+        <section id="screen-login" class="screen absolute inset-0 flex items-center justify-center p-6">
+            <div class="w-full max-w-xs bg-[#090d1a] border border-emerald-500/20 p-6 rounded neon-border">
+                <div class="text-center mb-6">
+                    <div class="inline-block border border-red-500/20 bg-red-950/20 text-red-400 text-[10px] px-2 py-0.5 rounded font-mono mb-2">
+                        SECURE_GATEWAY_RESTRITO
+                    </div>
+                    <h2 class="text-sm font-bold text-white uppercase tracking-widest">Painel Administrativo</h2>
+                </div>
+                
+                <form id="login-form" class="space-y-4">
+                    <div>
+                        <label class="block text-[10px] text-gray-500 mb-1">E-MAIL DO OPERADOR</label>
+                        <input type="email" id="login-email" required class="w-full bg-[#060913] border border-gray-800 focus:border-emerald-500/50 rounded px-3 py-2 text-xs text-white focus:outline-none font-mono">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] text-gray-500 mb-1">CHAVE DE ACESSO CRIPTOGRAFADA</label>
+                        <input type="password" id="login-password" required class="w-full bg-[#060913] border border-gray-800 focus:border-emerald-500/50 rounded px-3 py-2 text-xs text-white focus:outline-none font-mono">
+                    </div>
+                    <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-500 text-black font-bold py-2 rounded text-xs transition uppercase font-mono">
+                        DECRYPT & VALIDATE
+                    </button>
+                </form>
+                <p id="login-error" class="text-[10px] text-red-400 mt-3 text-center hidden font-mono">ERR_AUTH: FALHA DE CRIPTOGRAFIA DE SESSÃO.</p>
+            </div>
+        </section>
+
+        <!-- JANELA 3: PAINEL ADMINISTRATIVO SECRETO (MÓDULO DATABASE) -->
+        <section id="screen-admin" class="screen absolute inset-4 flex flex-col bg-[#090d1a] border border-emerald-500/20 rounded p-6 neon-border">
+            <div class="flex justify-between items-center mb-4 shrink-0 pb-3 border-b border-emerald-500/10">
+                <div>
+                    <h2 class="text-lg font-bold text-white uppercase tracking-wider">Cloud Database Control</h2>
+                    <p class="text-[10px] text-gray-500">// REGISTROS CAPTURADOS DO FIRESTORE EM TEMPO REAL</p>
+                </div>
+                <div class="text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-2 py-1 rounded font-mono">
+                    ESTADO_SESSÃO: ADMIN_CONECTADO
+                </div>
+            </div>
+
+            <!-- Listagem de Leads vindos do Banco Real -->
+            <div class="flex-1 bg-[#060913] border border-gray-900 rounded p-4 flex flex-col overflow-hidden">
+                <div class="grid grid-cols-3 text-[10px] text-gray-500 font-bold border-b border-gray-800 pb-2 mb-2 px-2">
+                    <div>IDENTIFICADOR / NOME</div>
